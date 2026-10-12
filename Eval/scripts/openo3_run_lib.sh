@@ -74,7 +74,6 @@ openo3_run() {
     || "${#max_turn_list[@]}" -ne "${n}" \
     || "${#frames_limit_list[@]}" -ne "${n}" \
     || "${#max_new_tokens_list[@]}" -ne "${n}" \
-    || "${#videozerobench_mode_list[@]}" -ne "${n}" \
     || "${#dataset_env_list[@]}" -ne "${n}" ]]; then
     echo "[Open-o3 Eval] dataset array length mismatch" >&2
     exit 1
@@ -111,21 +110,13 @@ openo3_run() {
     local max_turn="${MAX_TURN:-${max_turn_list[$i]}}"
     local frames_limit="${frames_limit_list[$i]:-${default_frames_limit}}"
     local max_new_tokens="${max_new_tokens_list[$i]:-${default_max_new_tokens}}"
-    local videozerobench_mode="${videozerobench_mode_list[$i]:-}"
     local extra_env="${dataset_env_list[$i]:-}"
     local use_tools="${USE_TOOLS:-true}"
-    if [[ "${dataset_name}" == "tvgbench" && -z "${USE_TOOLS:-}" ]]; then
-      use_tools=false
-    fi
     local log_name="${dataset_name}"
     local extra_args=()
 
     openo3_apply_extra_env "${extra_env}"
 
-    if [[ -n "${videozerobench_mode}" ]]; then
-      log_name="${dataset_name}_${videozerobench_mode}"
-      extra_args+=(--videozerobench_mode "${videozerobench_mode}")
-    fi
     if [[ -n "${VAL_DATASET_SAMPLE:-}" ]]; then
       extra_args+=(--val_dataset_sample "${VAL_DATASET_SAMPLE}")
     fi

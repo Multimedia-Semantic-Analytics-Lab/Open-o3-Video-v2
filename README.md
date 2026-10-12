@@ -6,9 +6,11 @@ Jiahao Meng<sup>\*</sup>, Zhongyuan Bao<sup>\*</sup>, Yue Tan, Haiquan Wen, Renr
 
 [[Project Page](https://msalab-pku.github.io/projects/Open-o3-Video-v2)] · [[4B Model](https://modelscope.cn/models/FDUBay/Open-o3-Video-v2-4B)] · [[Training Annotations](https://modelscope.cn/datasets/FDUBay/Open-o3-Video-v2-data)]
 
-**From grounded reasoning over fixed frames to an agentic system that actively seeks, grounds, and reuses visual evidence.** Open-o3-Video-v2 identifies missing clues, inspects relevant clips, anchors observations to moments and objects, and carries that evidence forward to refine its reasoning and produce a verifiable answer. This repository provides supervised fine-tuning (SFT), reinforcement learning (RL), and evaluation code.
 
 ![Open-o3-Video-v2 overview](assets/teaser.png)
+
+**From grounded reasoning over fixed frames to an agentic system that actively seeks, grounds, and reuses visual evidence.** Open-o3-Video-v2 identifies missing clues, inspects relevant clips, anchors observations to moments and objects, and carries that evidence forward to refine its reasoning and produce a verifiable answer. This repository provides supervised fine-tuning (SFT), reinforcement learning (RL), and evaluation code.
+
 
 ## Method
 
@@ -16,7 +18,7 @@ Jiahao Meng<sup>\*</sup>, Zhongyuan Bao<sup>\*</sup>, Yue Tan, Haiquan Wen, Renr
 
 **Multi-turn grounded data.** **STGR-v2-CoT-135K** includes **52K** multi-turn trajectories linking tool calls, returned frames, grounded reasoning, and final answers. **STGR-v2-RL-13K** provides informative examples for policy optimization. The 13K count is the approximate training sample count; the released JSON files contain larger source pools.
 
-**Clue-Seek GRPO (CS-GRPO).** RL optimizes complete interaction trajectories. It rewards final clue coverage and useful gains from new observations. It penalizes excessive, repeated, fragmented, or uninformative retrieval. Answer accuracy, output format, and grounded thinking remain part of the objective. See the [project page](https://msalab-pku.github.io/projects/Open-o3-Video-v2) for details.
+**Clue-Seek GRPO (CS-GRPO).** RL optimizes complete interaction trajectories. It rewards final clue coverage and useful gains from new observations. It penalizes excessive, repeated, fragmented, or uninformative retrieval. Answer accuracy, output format, and grounded thinking remain part of the objective.
 
 ![Data construction](assets/data.png)
 ![Training pipeline](assets/method.png)
@@ -60,22 +62,25 @@ Download the annotations and source videos, then prepare the training inputs as 
 Download the [Qwen3-VL-4B-Instruct](https://modelscope.cn/models/Qwen/Qwen3-VL-4B-Instruct) base model and run the retained 135K recipe:
 
 ~~~bash
+# download the model
 modelscope download --model Qwen/Qwen3-VL-4B-Instruct --local_dir ./models/Qwen3-VL-4B-Instruct
+# sft
 MODEL_PATH="$PWD/models/Qwen3-VL-4B-Instruct" \
 PREPARED_DIR="$PWD/SFT/prepared" \
 OUTPUT_DIR="$PWD/SFT/checkpoints/openo3-video-v2-4b-sft" \
-NPROC_PER_NODE=8 bash SFT/train.sh
+NPROC_PER_NODE=8 bash SFT/train.sh configs/qwen3vl/open-o3-video/qwen3_sft_mix_multi_image_135k.yaml
 ~~~
 
-The 8B recipe uses [Qwen3-VL-8B-Instruct](https://modelscope.cn/models/Qwen/Qwen3-VL-8B-Instruct) and `SFT/configs/qwen3vl/open-o3-video/qwen3_sft_mix_multi_image_135k_8b.yaml`. See [SFT/README.md](SFT/README.md).
+The 4B config above is the default in `SFT/train.sh`. The 8B recipe uses [Qwen3-VL-8B-Instruct](https://modelscope.cn/models/Qwen/Qwen3-VL-8B-Instruct) and `SFT/configs/qwen3vl/open-o3-video/qwen3_sft_mix_multi_image_135k_8b.yaml`. See [SFT/README.md](SFT/README.md).
 
 ### 4. Reinforcement learning
 
 RL starts from an SFT model in Transformers format. Download the released [4B SFT model](https://modelscope.cn/models/FDUBay/Open-o3-Video-v2-4B-SFT), or export a checkpoint from step 3. The default recipe uses eight GPUs and the Video-o3 split created above:
 
 ~~~bash
-modelscope download --model FDUBay/Open-o3-Video-v2-4B-SFT \
-  --local_dir ./models/openo3-video-v2-4b-sft
+# download the model
+modelscope download --model FDUBay/Open-o3-Video-v2-4B-SFT --local_dir ./models/openo3-video-v2-4b-sft
+# rl
 MODEL_PATH="$PWD/models/openo3-video-v2-4b-sft" \
 DATA_ROOT="$PWD/data/annotations" \
 MEDIA_ROOT="$PWD/data/media" \
@@ -90,7 +95,9 @@ Download the [4B model](https://modelscope.cn/models/FDUBay/Open-o3-Video-v2-4B)
 
 ~~~bash
 cd Eval
+# download the model
 modelscope download --model FDUBay/Open-o3-Video-v2-4B --local_dir ./models/Open-o3-Video-v2-4B
+# eval
 VIDEO_HOLMES_DATASET_DIR="$PWD/data/benchmarks/Video-Holmes/test_Video-Holmes.json" \
 VAL_DATASET_SAMPLE=1 bash scripts/eval_openo3video_v2_4b.sh video_holmes
 ~~~

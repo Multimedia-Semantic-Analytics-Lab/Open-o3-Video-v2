@@ -36,7 +36,6 @@ dataset_dirs=(
 max_turn_list=(5 0 5 5 5 5 5 5 0)
 frames_limit_list=(96 96 96 96 96 96 96 96 96)
 max_new_tokens_list=(4096 4096 4096 4096 4096 4096 4096 4096 4096)
-videozerobench_mode_list=("" "" "" "" "" "" "" "" "")
 dataset_env_list=(
   "V_STAR_VIDEO_DIR=${V_STAR_VIDEO_DIR:-${DATA_ROOT:-data/benchmarks}/V-STaR/videos}"
   ""

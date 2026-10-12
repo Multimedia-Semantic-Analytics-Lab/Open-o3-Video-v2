@@ -41,6 +41,6 @@ DRY_RUN=1 bash scripts/eval_openo3video_v2_4b.sh video_holmes
 VAL_DATASET_SAMPLE=1 bash scripts/eval_openo3video_v2_4b.sh video_holmes
 ```
 
-Remove `VAL_DATASET_SAMPLE` for a full run. With no dataset argument, the script runs all nine paper benchmarks. Pass one or more dataset keys to run a subset. Set `CUDA_VISIBLE_DEVICES` and `NPROC_PER_NODE` for the available GPUs. The common settings are 1 fps, 96 frames, 4,096 new tokens, temperature 0.01, top-p 0.001, and top-k 1. General understanding and V-STaR allow five `crop_video` turns. Charades-TimeLens and TVGBench use `max_turn=0`; TVGBench also uses `use_tools=false`.
+Remove `VAL_DATASET_SAMPLE` for a full run. With no dataset argument, the script runs all nine paper benchmarks. Pass one or more dataset keys to run a subset. Set `CUDA_VISIBLE_DEVICES` and `NPROC_PER_NODE` for the available GPUs. The common settings are 1 fps, 96 frames, 4,096 new tokens, temperature 0.01, top-p 0.001, and top-k 1. For general understanding and V-STaR, `max_turn=5` allows up to five regular generation steps before a direct-answer fallback. For Charades-TimeLens and TVGBench, `max_turn=0` runs one direct-answer generation without a tool call.
 
 Results and logs are written under `openo3_eval_result/openo3video_v2_4b/`, or under `RESULT_ROOT` if set. For direct CLI options, run `uv run --no-sync openo3-eval eval-openo3 --help`. Run `uv run --no-sync pytest tests/` for parser and dataset tests.

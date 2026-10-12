@@ -18,7 +18,7 @@ The installer creates `SFT/scripts/qwen3vl/.venv` with Python 3.12. It requires 
 export PREPARED_DIR="$PWD/SFT/prepared"
 export MODEL_PATH="$PWD/models/Qwen3-VL-4B-Instruct"
 export OUTPUT_DIR="$PWD/SFT/checkpoints/v2-4b-sft"
-NPROC_PER_NODE=8 bash SFT/train.sh
+NPROC_PER_NODE=8 bash SFT/train.sh configs/qwen3vl/open-o3-video/qwen3_sft_mix_multi_image_135k.yaml
 ```
 
 For 8B, use the 8B base model and config:
