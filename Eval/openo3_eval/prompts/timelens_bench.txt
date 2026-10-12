@@ -1,0 +1,2 @@
+<video>
+Please find the visual event described by the sentence '{query}', determining its starting and ending times. The format should be: 'The event happens in <start time> - <end time> seconds'.

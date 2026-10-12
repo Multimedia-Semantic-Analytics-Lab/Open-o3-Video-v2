@@ -1,0 +1,39 @@
+# Environments and local configuration
+.venv/
+**/.venv/
+.env
+.env.*
+!.env.example
+**/env.local.sh
+*.key
+*.pem
+
+# Data, models, and generated artifacts
+data/
+models/
+SFT/prepared/
+SFT/checkpoints/
+RL/data/
+RL/checkpoints/
+RL/logs/
+Eval/data/
+Eval/models/
+Eval/openo3_eval_result/
+Eval/.openo3_eval_cache/
+**/logs/
+**/.cache/
+**/wandb/
+*.safetensors
+*.pt
+*.pth
+*.parquet
+
+# Python and editor caches
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.idea/
+.vscode/
+.DS_Store

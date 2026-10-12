@@ -1,0 +1,35 @@
+tools:
+  - class_name: custom_tools.openo3_video_agent_tools.CropVideoTool
+    config:
+      type: native
+      fps: 1.0
+      max_frames:
+        coarse: 8
+        medium: 16
+        fine: 32
+      frame_max_height: 336
+    tool_schema:
+      type: function
+      function:
+        name: crop_video
+        description: Crop a video segment for closer visual inspection.
+        parameters:
+          type: object
+          properties:
+            start_time:
+              type: number
+              description: Start time in seconds within the full video.
+            end_time:
+              type: number
+              description: End time in seconds within the full video.
+            sampling_strategy:
+              type: string
+              enum:
+                - coarse
+                - medium
+                - fine
+              description: Sampling density for the selected segment.
+          required:
+            - start_time
+            - end_time
+            - sampling_strategy

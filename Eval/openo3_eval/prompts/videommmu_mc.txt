@@ -1,0 +1,8 @@
+<video>
+{question_image_block}Question Category: {category}
+{category_instruction}
+Answer the following multiple-choice question based on the video{question_image_suffix}.
+Question: {question}
+Options:
+{choice}
+Respond with only the letter of the correct option.

@@ -1,0 +1,7 @@
+<video>
+This video's subtitles are listed below:
+{asr}
+Select the best answer to the following multiple-choice question based on the video. Respond with only the letter (A, B, C, or D) of the correct option.
+{question}
+{choice}
+The best answer is:

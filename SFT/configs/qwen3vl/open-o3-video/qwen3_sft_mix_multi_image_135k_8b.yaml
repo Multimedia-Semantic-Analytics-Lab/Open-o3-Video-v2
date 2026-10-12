@@ -1,0 +1,57 @@
+dataset:
+  - stgr_sft_version_0501_18k
+  - stgr_timelens_32k_temporal_qa
+  - seeker_sft_w_tool_mix_grounded_version_0501_52k_multi_image
+  - seeker_sft_cgbench_multi_image_obs1fps_crop124fps_cap96
+  - seeker_sft_longvt_multi_image_obs1fps_crop124fps_cap96
+  - stgr_caprl_caption_12k_obs1fps_cap96
+  - stgr_omni100k_mcq_5_7k_obs1fps_cap96
+  - stgr_omni100k_oe_7k_obs1fps_cap96
+
+output_dir: checkpoints/qwen3_sft_mix_multi_image_135k_8b
+wandb_exp_name: qwen3_8b_sft_0701_135K
+
+wandb_project: open-o3-video-v2
+model: Qwen/Qwen3-VL-8B-Instruct
+load_from_cache_file: false
+split_dataset_ratio: 0.0
+
+tuner_type: full
+finetune: true
+num_train_epochs: 1
+micro_batch_size: 1
+global_batch_size: 64
+max_length: 64000
+packing: false
+lazy_tokenize: true
+
+lr: 5e-6
+min_lr: 1e-6
+lr_warmup_fraction: 0.05
+
+eval_steps: 100000
+save_steps: 500
+save_safetensors: true
+no_save_optim: true
+no_save_rng: true
+
+dataloader_num_workers: 8
+dataset_num_proc: 16
+
+tensor_model_parallel_size: 1
+pipeline_model_parallel_size: 1
+expert_model_parallel_size: 1
+sequence_parallel: false
+
+attention_backend: flash
+cross_entropy_loss_fusion: true
+gradient_accumulation_fusion: false
+padding_free: false
+report_to: wandb
+
+recompute_granularity: full
+recompute_method: uniform
+recompute_num_layers: 1
+
+add_non_thinking_prefix: false
+loss_scale: ignore_empty_think

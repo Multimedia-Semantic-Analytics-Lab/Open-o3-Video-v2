@@ -1,0 +1,6 @@
+<video>
+{question_image_block}Question Category: {category}
+{category_instruction}
+Answer the following question based on the video{question_image_suffix}.
+Question: {question}
+Respond with only the final answer.

@@ -1,0 +1,5 @@
+<video>
+Select the best answer to the following multiple-choice question based on the video. Respond with only the letter (A, B, C, D, E, F, G, or H) of the correct option.
+{question}
+{choice}
+The best answer is:

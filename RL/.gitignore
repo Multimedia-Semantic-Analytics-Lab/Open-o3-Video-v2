@@ -1,0 +1,68 @@
+# Local overrides / secrets
+scripts/train/env.local.sh
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+
+# Training runtime outputs
+data/
+logs/
+log/
+outputs/
+multirun/
+.history/
+ray_results/
+
+# Caches and experiment trackers
+.cache/
+cache/
+wandb/
+wandb_artifacts/
+**/.cache/
+**/wandb/
+**/wandb_artifacts/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.hypothesis/
+
+# Checkpoints / model artifacts
+ckpts/
+checkpoints/
+**/ckpts/
+**/checkpoints/
+*.ckpt
+*.pt
+*.pth
+*.safetensors
+*.bin
+*.onnx
+*.tar.gz
+*.lock
+
+# Local datasets / generated data dumps
+data/
+debug/
+datasets/
+*.parquet
+*.jsonl.tmp
+
+# Python build and bytecode
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
+*.so
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Editors / OS files
+.idea/
+.vscode/
+.DS_Store
+*.swp
+*~

@@ -1,0 +1,2 @@
+- name: openo3_tool_agent
+  _target_: custom_agent_loops.openo3_tool_agent_loop.OpenO3ToolAgentLoop

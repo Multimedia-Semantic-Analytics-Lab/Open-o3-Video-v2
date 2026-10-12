@@ -1,0 +1,162 @@
+[build-system]
+build-backend = "hatchling.build"
+requires = ["hatchling"]
+
+[dependency-groups]
+dev = [
+  "torch",
+  "torchvision",
+  "accelerate>=1.0.0",
+  "packaging",
+  "psutil",
+  "ninja",
+  "transformers==4.57.1",
+  "qwen_vl_utils==0.0.14",
+  "decord==0.6.0; sys_platform != 'darwin'",
+  "tabulate==0.10.0",
+  "omegaconf",
+  "python-dotenv",
+  "pysrt",
+  "pandas>=3.0.5",
+  "opencv-python-headless>=5.0.0.93",
+]
+test = [
+  "coverage",
+  "pytest",
+  "pytest-cov"
+]
+typing = [
+  "pydantic>=2.0.0",
+  "pre-commit",
+  "mypy",
+  "ruff",
+  "types-tabulate"
+]
+
+[project]
+classifiers = [
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12"
+]
+dependencies = [
+]
+description = "Open-o3-Video-v2 evaluation"
+name = "openo3-video-eval"
+readme = "README.md"
+requires-python = ">=3.11, <3.13"
+version = "0.0.1"
+
+[project.scripts]
+openo3-eval = "openo3_eval.__main__:main"
+
+[project.urls]
+Homepage = "https://msalab-pku.github.io/projects/Open-o3-Video-v2"
+Repository = "https://msalab-pku.github.io/projects/Open-o3-Video-v2"
+
+[tool.coverage.report]
+exclude_also = [
+  "raise AssertionError",
+  "raise NotImplementedError",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+  "except Exception as e"
+]
+
+[tool.coverage.run]
+omit = [
+  "openo3_eval/__main__.py"
+]
+
+[tool.hatch.build]
+only-packages = true
+skip-excluded-dirs = true
+exclude = [
+  ".openo3_eval_cache/**",
+  "openo3_eval_result/**",
+  "logs/**",
+  "runlogs/**",
+  ".venv/**",
+  ".pytest_cache/**",
+  "__pycache__/**"
+]
+
+[tool.hatch.build.sources]
+"openo3_eval" = "openo3_eval"
+
+[tool.hatch.build.targets.sdist]
+include = ["openo3_eval"]
+
+[tool.hatch.build.targets.wheel]
+include = ["openo3_eval"]
+
+[tool.mypy]
+disable_error_code = "attr-defined"
+disallow_any_generics = false
+disallow_subclassing_any = false
+ignore_missing_imports = true
+plugins = ["pydantic.mypy"]
+strict = true
+warn_return_any = false
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.format]
+indent-style = "space"
+line-ending = "auto"
+quote-style = "double"
+skip-magic-trailing-comma = false
+
+[tool.ruff.lint]
+extend-ignore = [
+  "B018",
+  "B019",
+  "RUF001",
+  "PGH003",
+  "PGH004",
+  "RUF003",
+  "E402",
+  "RUF002",
+  "B904"
+]
+extend-select = [
+  "I",  # isort
+  "B",  # flake8-bugbear
+  "C4",  # flake8-comprehensions
+  "PGH",  # pygrep-hooks
+  "RUF",  # ruff
+  "W",  # pycodestyle
+  "YTT"  # flake8-2020
+]
+fixable = ["ALL"]
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10
+
+[tool.ruff.lint.per-file-ignores]
+"**/__init__.py" = ["F401", "F403"]
+
+[tool.uv]
+default-groups = [
+  "dev",
+  "test"
+]
+override-dependencies = [
+]
+prerelease = "if-necessary-or-explicit"
+
+[[tool.uv.index]]
+explicit = true
+name = "pytorch-cuda"
+url = "https://download.pytorch.org/whl/cu129"
+
+[tool.uv.sources]
+torch = [
+  {index = "pytorch-cuda", marker = "sys_platform != 'darwin'"}
+]
+torchvision = [
+  {index = "pytorch-cuda", marker = "sys_platform != 'darwin'"}
+]

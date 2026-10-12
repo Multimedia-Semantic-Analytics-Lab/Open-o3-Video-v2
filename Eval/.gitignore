@@ -1,0 +1,40 @@
+# Local environment and credentials
+.venv/
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+
+# Downloaded data, models, and evaluation output
+/data/
+/models/
+/openo3_eval_result/
+/.openo3_eval_cache/
+/result*
+/logs/
+/runlogs/
+*.log
+*.out
+*.safetensors
+*.pt
+*.pth
+
+# Python build and tool caches
+__pycache__/
+*.py[cod]
+*.egg-info/
+/build/
+/dist/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage*
+/htmlcov/
+
+# Editor and OS files
+.idea/
+.vscode/
+.codex/
+.agents/
+.DS_Store
