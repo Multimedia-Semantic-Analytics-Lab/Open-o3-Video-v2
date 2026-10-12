@@ -6,13 +6,17 @@ Jiahao Meng<sup>\*</sup>, Zhongyuan Bao<sup>\*</sup>, Yue Tan, Haiquan Wen, Renr
 
 [[Project Page](https://msalab-pku.github.io/projects/Open-o3-Video-v2)] · [[4B Model](https://modelscope.cn/models/FDUBay/Open-o3-Video-v2-4B)] · [[Training Annotations](https://modelscope.cn/datasets/FDUBay/Open-o3-Video-v2-data)]
 
-Open-o3-Video-v2 is an agentic video reasoning system. It inspects visual evidence, grounds objects and events, and reasons across multiple turns. This repository provides supervised fine-tuning (SFT), reinforcement learning (RL), and evaluation code.
+**From grounded reasoning over fixed frames to an agentic system that actively seeks, grounds, and reuses visual evidence.** Open-o3-Video-v2 identifies missing clues, inspects relevant clips, anchors observations to moments and objects, and carries that evidence forward to refine its reasoning and produce a verifiable answer. This repository provides supervised fine-tuning (SFT), reinforcement learning (RL), and evaluation code.
 
 ![Open-o3-Video-v2 overview](assets/teaser.png)
 
 ## Method
 
-The training data includes **STGR-v2-CoT-135K** supervised examples and **STGR-v2-RL-13K** for policy optimization. The RL agent uses a `crop_video` tool and rewards for answers, format, grounding, and tool use. See the [project page](https://msalab-pku.github.io/projects/Open-o3-Video-v2) for the method and results.
+**Agentic evidence-grounded reasoning.** The model starts with sparse video observations. When evidence is missing, it calls `crop_video` to inspect a relevant interval. It grounds the retrieved moments and objects, then uses them in its next reasoning step.
+
+**Multi-turn grounded data.** **STGR-v2-CoT-135K** includes **52K** multi-turn trajectories linking tool calls, returned frames, grounded reasoning, and final answers. **STGR-v2-RL-13K** provides informative examples for policy optimization. The 13K count is the approximate training sample count; the released JSON files contain larger source pools.
+
+**Clue-Seek GRPO (CS-GRPO).** RL optimizes complete interaction trajectories. It rewards final clue coverage and useful gains from new observations. It penalizes excessive, repeated, fragmented, or uninformative retrieval. Answer accuracy, output format, and grounded thinking remain part of the objective. See the [project page](https://msalab-pku.github.io/projects/Open-o3-Video-v2) for details.
 
 ![Data construction](assets/data.png)
 ![Training pipeline](assets/method.png)
@@ -87,11 +91,11 @@ Download the [4B model](https://modelscope.cn/models/FDUBay/Open-o3-Video-v2-4B)
 ~~~bash
 cd Eval
 modelscope download --model FDUBay/Open-o3-Video-v2-4B --local_dir ./models/Open-o3-Video-v2-4B
-VIDEO_MME_DATASET_DIR="$PWD/data/benchmarks/Video-MME/Video-MME.json" \
-VAL_DATASET_SAMPLE=1 bash scripts/eval_openo3video_v2_4b.sh video_mme
+VIDEO_HOLMES_DATASET_DIR="$PWD/data/benchmarks/Video-Holmes/test_Video-Holmes.json" \
+VAL_DATASET_SAMPLE=1 bash scripts/eval_openo3video_v2_4b.sh video_holmes
 ~~~
 
-Remove `VAL_DATASET_SAMPLE` for a full run. See [Eval/README.md](Eval/README.md) for benchmark paths and tool settings.
+Remove `VAL_DATASET_SAMPLE` for a full run. The evaluator supports all nine benchmarks in the paper; see [Eval/README.md](Eval/README.md) for dataset keys, paths, and tool settings.
 
 ## License and Citation
 
