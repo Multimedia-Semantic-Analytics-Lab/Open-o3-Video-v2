@@ -4,8 +4,7 @@ Jiahao Meng<sup>\*</sup>, Zhongyuan Bao<sup>\*</sup>, Yue Tan, Haiquan Wen, Renr
 
 <sup>\*</sup> Equal contribution.
 
-[[Paper](https://arxiv.org/pdf/2610.xxxxx)] · [[Project Page](https://msalab-pku.github.io/projects/Open-o3-Video-v2)] · [[4B Model](https://modelscope.cn/models/FDUBay/Open-o3-Video-v2-4B)] · [[Training Annotations](https://modelscope.cn/datasets/FDUBay/Open-o3-Video-v2-data)]
-
+[[Paper](https://arxiv.org/pdf/2610.xxxxx)] · [[Project Page](https://msalab-pku.github.io/projects/Open-o3-Video-v2)] · [[4B Model](https://modelscope.cn/models/FDUBay/Open-o3-Video-v2-4B)] · [[Data](https://modelscope.cn/datasets/FDUBay/Open-o3-Video-v2-data)] · [[V1 (Open-o3-Video)](https://github.com/marinero4972/Open-o3-Video)]
 
 ![Open-o3-Video-v2 overview](assets/teaser.png)
 
@@ -64,6 +63,7 @@ Download the [Qwen3-VL-4B-Instruct](https://modelscope.cn/models/Qwen/Qwen3-VL-4
 ~~~bash
 # download the model
 modelscope download --model Qwen/Qwen3-VL-4B-Instruct --local_dir ./models/Qwen3-VL-4B-Instruct
+
 # sft
 MODEL_PATH="$PWD/models/Qwen3-VL-4B-Instruct" \
 PREPARED_DIR="$PWD/SFT/prepared" \
@@ -80,6 +80,7 @@ RL starts from an SFT model in Transformers format. Download the released [4B SF
 ~~~bash
 # download the model
 modelscope download --model FDUBay/Open-o3-Video-v2-4B-SFT --local_dir ./models/openo3-video-v2-4b-sft
+
 # rl
 MODEL_PATH="$PWD/models/openo3-video-v2-4b-sft" \
 DATA_ROOT="$PWD/data/annotations" \
@@ -97,6 +98,7 @@ Download the [4B model](https://modelscope.cn/models/FDUBay/Open-o3-Video-v2-4B)
 cd Eval
 # download the model
 modelscope download --model FDUBay/Open-o3-Video-v2-4B --local_dir ./models/Open-o3-Video-v2-4B
+
 # eval
 VIDEO_HOLMES_DATASET_DIR="$PWD/data/benchmarks/Video-Holmes/test_Video-Holmes.json" \
 VAL_DATASET_SAMPLE=1 bash scripts/eval_openo3video_v2_4b.sh video_holmes
