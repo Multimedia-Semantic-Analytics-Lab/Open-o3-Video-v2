@@ -4,7 +4,7 @@ Jiahao Meng<sup>\*</sup>, Zhongyuan Bao<sup>\*</sup>, Yue Tan, Haiquan Wen, Renr
 
 <sup>\*</sup> Equal contribution.
 
-[[Project Page](https://msalab-pku.github.io/projects/Open-o3-Video-v2)] · [[4B Model](https://modelscope.cn/models/FDUBay/Open-o3-Video-v2-4B)] · [[Training Annotations](https://modelscope.cn/datasets/FDUBay/Open-o3-Video-v2-data)]
+[[Paper](https://arxiv.org/pdf/2610.xxxxx)] · [[Project Page](https://msalab-pku.github.io/projects/Open-o3-Video-v2)] · [[4B Model](https://modelscope.cn/models/FDUBay/Open-o3-Video-v2-4B)] · [[Training Annotations](https://modelscope.cn/datasets/FDUBay/Open-o3-Video-v2-data)]
 
 
 ![Open-o3-Video-v2 overview](assets/teaser.png)
@@ -34,7 +34,7 @@ Jiahao Meng<sup>\*</sup>, Zhongyuan Bao<sup>\*</sup>, Yue Tan, Haiquan Wen, Renr
 
 ## Results
 
-The 4B model achieves **40.4% mAM and 56.3% mLGM on V-STaR**. The project page also reports 53.2 on LVBench, 48.0 on Video-Holmes, and 49.8 mIoU on Charades-TimeLens.
+Open-o3-Video-v2-8B achieves **40.7% mAM and 56.5% mLGM on V-STaR**. Meanwhile, both the 4B and 8B models demonstrate consistent performance improvements across a wide range of general video understanding benchmarks.
 
 ![V-STaR results](assets/vstar-results-table.png)
 ![General video benchmark results](assets/general-results-table.png)
