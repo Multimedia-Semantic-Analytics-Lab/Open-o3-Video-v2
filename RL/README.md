@@ -1,6 +1,6 @@
 # Reinforcement Learning
 
-This directory contains the GRPO recipe, `crop_video` tool, multi-turn agent loop, and bundled verl source. Follow the [root README](../README.md) to obtain the annotations, videos, and an SFT checkpoint. Run these commands from `RL/`.
+This directory contains the GRPO recipe, `crop_video` tool, multi-turn agent loop, and bundled verl source. See [Data](../DATA.md) for annotations and videos, and the [root README](../README.md) for an SFT checkpoint. Run these commands from `RL/`.
 
 ## Single-node run
 
@@ -13,9 +13,9 @@ export MODEL_PATH="$PWD/../models/openo3-video-v2-4b-sft"
 bash scripts/start_openo3_train.sh
 ```
 
-The setup uses Python 3.11 and requires CUDA, `nvcc`, and a C++ compiler. Data preparation creates `data/rl_train.json` and `data/rl_val.json`. The entrypoint also reads the Video-o3 and TimeLens annotations from `DATA_ROOT/RL/`. All media roots can be overridden with `OPENO3_VIDEO_ROOT`, `VIDEOO3_VIDEO_ROOT`, and `TIMELENS_VIDEO_ROOT`.
+The setup uses Python 3.11 and requires CUDA, `nvcc`, and a C++ compiler. Data preparation selects 100 Video-o3 examples for validation with seed 42 and writes disjoint `data/videoo3_train.json` and `data/videoo3_val.json` files. The entrypoint reads Open-o3 and TimeLens directly from `DATA_ROOT/RL/`. Training samples from the three sources at a 0.4/0.5/0.1 ratio, with a maximum of 12,800 examples by default (approximately 13K in the paper). The released JSONs contain larger source pools. All media roots can be overridden with `OPENO3_VIDEO_ROOT`, `VIDEOO3_VIDEO_ROOT`, and `TIMELENS_VIDEO_ROOT`.
 
-The default run uses eight GPUs, batch size 32, prompt length 28,672, response length 8,192, rollout count 8, and actor learning rate 1e-6. Checkpoints are saved every 50 steps under `checkpoints/`. The training script holds the reward weights and remaining settings. Use `OUT_CKPT_ROOT` to change the checkpoint location. W&B is disabled by default; see the root README for login and tracking.
+The default run uses eight GPUs, batch size 32, prompt length 28,672, response length 8,192, rollout count 8, and actor learning rate 1e-6. Training-example selection uses a fixed seed of 111 by default (`UNIFIED_TRAIN_MAX_SAMPLES_SEED`); dataloader order and stochastic rollouts are not fixed by that setting. Validation before training is disabled. The 10,000-step interval exceeds this one-epoch run, so the 100-example validation set is evaluated at the final step. Checkpoints are saved every 50 steps under `checkpoints/`. The training script holds the reward weights and remaining settings. Use `OUT_CKPT_ROOT` to change the checkpoint location. W&B is disabled by default. To enable it, run `wandb login` in the RL environment and set `WANDB_MODE=online`.
 
 ## Two-node run
 

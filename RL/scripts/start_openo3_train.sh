@@ -38,10 +38,10 @@ if [[ ! -x "${PYTHON_BIN}" ]]; then
     exit 2
 fi
 
-OPENO3_TRAIN_JSON="${OPENO3_TRAIN_JSON:-${repo_root}/data/rl_train.json}"
-VIDEOO3_TRAIN_JSON="${VIDEOO3_TRAIN_JSON:-${DATA_ROOT}/RL/video-o3_with_grounded_cot_7891.json}"
+OPENO3_TRAIN_JSON="${OPENO3_TRAIN_JSON:-${DATA_ROOT}/RL/STGR-RL-Refine-0501-17615.json}"
+VIDEOO3_TRAIN_JSON="${VIDEOO3_TRAIN_JSON:-${repo_root}/data/videoo3_train.json}"
 TIMELENS_TRAIN_JSON="${TIMELENS_TRAIN_JSON:-${DATA_ROOT}/RL/timelens_32k_stgr_format_temporal_qa_ge120s.json}"
-OPENO3_VAL_JSON="${OPENO3_VAL_JSON:-${repo_root}/data/rl_val.json}"
+VIDEOO3_VAL_JSON="${VIDEOO3_VAL_JSON:-${repo_root}/data/videoo3_val.json}"
 
 OPENO3_VIDEO_ROOT="${OPENO3_VIDEO_ROOT:-${MEDIA_ROOT}}"
 TIMELENS_VIDEO_ROOT="${TIMELENS_VIDEO_ROOT:-${MEDIA_ROOT}/timelens-100k}"
@@ -59,8 +59,8 @@ TIMELENS_RATIO=0.1
 CGBENCH_RATIO=0.0
 MIX_RATIO_OVERSAMPLE=false
 
-for input in "${OPENO3_TRAIN_JSON}" "${VIDEOO3_TRAIN_JSON}" "${TIMELENS_TRAIN_JSON}" "${OPENO3_VAL_JSON}"; do
-    [[ -f "${input}" ]] || { echo "Missing training annotation: ${input}" >&2; exit 2; }
+for input in "${OPENO3_TRAIN_JSON}" "${VIDEOO3_TRAIN_JSON}" "${TIMELENS_TRAIN_JSON}" "${VIDEOO3_VAL_JSON}"; do
+    [[ -f "${input}" ]] || { echo "Missing RL annotation: ${input}" >&2; exit 2; }
 done
 
 maybe_stop_ray
@@ -93,7 +93,7 @@ cd "${PROJECT_DIR}"
     algorithm.use_kl_in_reward=False \
     algorithm.norm_adv_by_std_in_grpo=true \
     data.train_files="['${OPENO3_TRAIN_JSON}','${VIDEOO3_TRAIN_JSON}','${TIMELENS_TRAIN_JSON}']" \
-    data.val_files="['${OPENO3_VAL_JSON}']" \
+    data.val_files="['${VIDEOO3_VAL_JSON}']" \
     data.train_batch_size=32 \
     data.max_prompt_length="${MAX_PROMPT_LENGTH}" \
     data.max_response_length="${MAX_RESPONSE_LENGTH}" \
@@ -107,8 +107,8 @@ cd "${PROJECT_DIR}"
     +data.videoo3_files="['${VIDEOO3_TRAIN_JSON}']" \
     +data.timelens_files="['${TIMELENS_TRAIN_JSON}']" \
     +data.cgbench_files="[]" \
-    +data.val_openo3_files="['${OPENO3_VAL_JSON}']" \
-    +data.val_videoo3_files="[]" \
+    +data.val_openo3_files="[]" \
+    +data.val_videoo3_files="['${VIDEOO3_VAL_JSON}']" \
     +data.val_timelens_files="[]" \
     +data.val_cgbench_files="[]" \
     +data.open_o3_video_root="${OPENO3_VIDEO_ROOT}" \
