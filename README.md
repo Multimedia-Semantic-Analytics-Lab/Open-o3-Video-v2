@@ -4,7 +4,7 @@ Jiahao Meng<sup>\*</sup>, Zhongyuan Bao<sup>\*</sup>, Yue Tan, Haiquan Wen, Renr
 
 <sup>\*</sup> Equal contribution.
 
-[[Paper](https://arxiv.org/pdf/2610.xxxxx)] · [[Project Page](https://msalab-pku.github.io/projects/Open-o3-Video-v2)] · [[4B Model](https://modelscope.cn/models/FDUBay/Open-o3-Video-v2-4B)] · [[Data](https://modelscope.cn/datasets/FDUBay/Open-o3-Video-v2-data)] · [[V1 (Open-o3-Video)](https://github.com/marinero4972/Open-o3-Video)]
+[[Paper](https://arxiv.org/pdf/2610.17656)] · [[Project Page](https://msalab-pku.github.io/projects/Open-o3-Video-v2)] · [[4B Model](https://modelscope.cn/models/FDUBay/Open-o3-Video-v2-4B)] · [[Data](https://modelscope.cn/datasets/FDUBay/Open-o3-Video-v2-data)] · [[V1 (Open-o3-Video)](https://github.com/marinero4972/Open-o3-Video)]
 
 ![Open-o3-Video-v2 overview](assets/teaser.png)
 
@@ -114,7 +114,7 @@ The project code is released under [Apache-2.0](LICENSE). The bundled verl code 
 @article{meng2026openo3v2,
   title={Open-o3-Video-v2: Seek, Ground, and Reason with Verifiable Spatio-Temporal Evidence},
   author={Meng, Jiahao and Bao, Zhongyuan and Tan, Yue and Wen, Haiquan and Zhang, Renrui and Wang, Anna and Li, Jason and Fu, Yanwei and Tong, Yunhai and Yang, Ming-Hsuan},
-  journal={arXiv preprint arXiv:2610.xxxxx},
+  journal={arXiv preprint arXiv:2610.17656},
   year={2026}
 }
 ~~~
